@@ -10,14 +10,47 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class MemberController {
 	
+	
 	@Autowired
 	private MemberService memberService;
 	
-	//memberJoin print   // URL=/member/memberLogin
+	//memberJoin // /member/memberJoin GET
+	@RequestMapping(value = "/member/memberJoin")
+	public String memberJoin() {
+		return "member/memberJoin";
+	}
+	
+	// memberJoin2 // /member/memberJoin POST
+	@RequestMapping(value = "/member/memberJoin", method = RequestMethod.POST)
+	public void memberJoin2(String id, String pw, String name, String email, String phone) throws Exception{
+		
+		MemberDTO memberDTO = new MemberDTO();
+		memberDTO.setId(id);
+		memberDTO.setPw(pw);
+		memberDTO.setName(name);
+		memberDTO.setPhone(phone);
+		memberDTO.setEmail(email);
+		
+		int result = memberService.memberJoin(memberDTO);
+		System.out.println(result);
+	}
+	
+	
+	//memberLogin print   // URL=/member/memberLogin
 	
 	@RequestMapping(value = "/member/memberLogin")
-	public String memberJoin() {
+	public String memberLogin() {
+		//System.out.println(name);
+		//System.out.println(age);
+		
+		//String name = request.getParameter("name");
+		//int age = Integer.parseInt(request.getParameter("age"));
+		
+		
+		
 		System.out.println("memberLogin test");
+		
+		
 		
 		// /WEB-INF/views/member/memberLogin.jsp
 		// servlet-context에서 prefix, suffix로 경로를 완성시켜준다.
@@ -39,4 +72,6 @@ public class MemberController {
 		System.out.println(memberDTO);
 		
 	}
+	
+	
 }
